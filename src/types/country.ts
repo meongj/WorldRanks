@@ -20,6 +20,8 @@ export interface Country {
   languages?: Record<string, string>;
   currencies?: Record<string, {name: string; symbol: string}>;
   continents: string[];
+  region: string;
+  subregion: string;
 }
 
 export type SortField = "population" | "name" | "area";
