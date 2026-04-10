@@ -37,7 +37,7 @@ function HomePage() {
                   <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-6">
                     <p className="text-[#6C727F] font-semibold">Found {filteredCountries.length} countries</p>
                     <div className="w-full md:w-[300px]">
-                      <SearchInput />
+                      <SearchInput onSearch={setSearch} />
                     </div>
                   </div>
 

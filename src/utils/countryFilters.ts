@@ -3,18 +3,19 @@
 
 import {Country, CountryFilters, Region} from "@/types/country";
 import {sortBy as sortByFn, orderBy} from "es-toolkit";
+import Fuse from "fuse.js";
 
 export function filterBySearch(countries: Country[], search: string): Country[] {
   if (!search) return countries;
 
-  //소문자로 바꿔서 포함하는지 확인
-  const query = search.toLowerCase();
-  return countries.filter(
-    (c) =>
-      c.name.common.toLowerCase().includes(query) ||
-      c.region.toLowerCase().includes(query) ||
-      (c.subregion?.toLowerCase().includes(query) ?? false),
-  );
+  // 관대한 매칭
+  const fuse = new Fuse(countries, {
+    keys: ["name.common", "region", "subregion"],
+    threshold: 0.4, // 0=완전일치, 1=전부매칭. 0.4면 적당히 관대
+    ignoreLocation: true, // 문자열 위치 무관하게 검색
+  });
+
+  return fuse.search(search).map((result) => result.item);
 }
 
 export function filterByRegions(countries: Country[], regions: Region[]) {
