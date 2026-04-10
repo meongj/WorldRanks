@@ -11,6 +11,9 @@ importers:
       '@fontsource-variable/geist':
         specifier: ^5.2.8
         version: 5.2.8
+      '@suspensive/react':
+        specifier: ^3.20.2
+        version: 3.20.2(react@19.2.4)
       '@tailwindcss/vite':
         specifier: ^4.2.2
         version: 4.2.2(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.5.2)(esbuild@0.27.7)(jiti@2.6.1)(tsx@4.21.0))
@@ -1394,6 +1397,11 @@ packages:
   '@sindresorhus/merge-streams@4.0.0':
     resolution: {integrity: sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==}
     engines: {node: '>=18'}
+
+  '@suspensive/react@3.20.2':
+    resolution: {integrity: sha512-BSh7PidCZlfpW8aXgldNf9n70PTTFw4yo4Zzev+yYSWya6SbR3v8DXsQnA7lJILNztnw22iYnjV6Nmumhhn9rA==}
+    peerDependencies:
+      react: ^18 || ^19
 
   '@tailwindcss/node@4.2.2':
     resolution: {integrity: sha512-pXS+wJ2gZpVXqFaUEjojq7jzMpTGf8rU6ipJz5ovJV6PUGmlJ+jvIwGrzdHdQ80Sg+wmQxUFuoW1UAAwHNEdFA==}
@@ -4721,6 +4729,10 @@ snapshots:
   '@sec-ant/readable-stream@0.4.1': {}
 
   '@sindresorhus/merge-streams@4.0.0': {}
+
+  '@suspensive/react@3.20.2(react@19.2.4)':
+    dependencies:
+      react: 19.2.4
 
   '@tailwindcss/node@4.2.2':
     dependencies:
