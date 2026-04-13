@@ -1,0 +1,28 @@
+import {Search} from "lucide-react";
+import {InputGroup, InputGroupAddon, InputGroupInput} from "./ui/input-group";
+import {useCallback, useState} from "react";
+import {debounce} from "es-toolkit";
+
+interface SearchInputProps {
+  onSearch: (value: string) => void;
+}
+
+export function SearchInput({onSearch}: SearchInputProps) {
+  const [value, setValue] = useState("");
+
+  const debouncedSearch = useCallback((query: string) => debounce(onSearch, 300)(query), [onSearch]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+    debouncedSearch(e.target.value);
+  };
+
+  return (
+    <InputGroup className="max-w-xs ">
+      <InputGroupAddon>
+        <Search />
+      </InputGroupAddon>
+      <InputGroupInput placeholder="Search by Name, Region, Subregion" onChange={handleChange} value={value} />
+    </InputGroup>
+  );
+}
