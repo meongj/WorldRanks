@@ -1,5 +1,8 @@
+import {NeighbouringCountries} from "@/components/NeighbouringCountries";
 import {InfoList} from "@/components/ui/info-list";
+import {SkeletonCard} from "@/components/ui/skeletonCard";
 import {countryQueries} from "@/queries/countries";
+import {Suspense} from "@suspensive/react";
 import {useSuspenseQuery} from "@tanstack/react-query";
 import {createFileRoute} from "@tanstack/react-router";
 
@@ -36,7 +39,11 @@ function CountryDetailPage() {
       </InfoList>
 
       {/* 인근 국가 */}
-      <div>{country.borders}</div>
+      {country.borders && country.borders.length > 0 && (
+        <Suspense fallback={<SkeletonCard count={country.borders.length} />}>
+          <NeighbouringCountries borders={country.borders} />
+        </Suspense>
+      )}
     </article>
   );
 }
