@@ -2,6 +2,7 @@ import {Country} from "@/types/country";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "./ui/table";
 import {flexRender, createColumnHelper, getCoreRowModel, useReactTable} from "@tanstack/react-table";
 import {useMemo} from "react";
+import {useNavigate} from "@tanstack/react-router";
 
 const columnHelper = createColumnHelper<Country>();
 
@@ -40,6 +41,7 @@ interface CountryTableProps {
 }
 
 export function CountryTable({countries}: CountryTableProps) {
+  const navigate = useNavigate();
   const table = useReactTable({
     data: countries,
     columns,
@@ -70,7 +72,11 @@ export function CountryTable({countries}: CountryTableProps) {
       </TableHeader>
       <TableBody>
         {table.getRowModel().rows.map((row) => (
-          <TableRow key={row.id}>
+          <TableRow
+            key={row.id}
+            role="link"
+            className="cursor-pointer "
+            onClick={() => navigate({to: "/country/$countryCode", params: {countryCode: row.original.cca3}})}>
             {row.getVisibleCells().map((cell) => (
               <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
             ))}

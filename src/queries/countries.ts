@@ -27,9 +27,10 @@ export const countryQueries = {
     queryOptions({
       queryKey: countryKeys.detail(code),
       queryFn: async () => {
-        return await api.get<Country[]>(
+        const res = await api.get<Country[]>(
           `/alpha?codes=${code}&fields=cca3,name,capital,population,area,borders,flags,independent,unMember,languages,currencies,region,subregion`,
         );
+        return res.data[0];
       },
       staleTime: DAY,
       enabled: !!code,
