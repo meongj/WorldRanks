@@ -6,5 +6,5 @@ import {useMemo} from "react";
 
 export function useFilteredCountries(filters: CountryFilters) {
   const {data: countries} = useSuspenseQuery(countryQueries.list());
-  return useMemo(() => applyFilters(countries ?? [], filters), [countries, filters]);
+  return useMemo(() => applyFilters(countries, filters), [countries, filters]);
 }

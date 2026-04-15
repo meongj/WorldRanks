@@ -17,7 +17,7 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const {filters, setSearch, setSortBy, toggleRegion, toggleUnMember, toggleIndependent} = useCountryFilters(undefined); // 구조분해할당
+  const {filters, setSearch, setSortBy, toggleRegion, toggleUnMember, toggleIndependent} = useCountryFilters(); // 구조분해할당
 
   return (
     <main className="min-h-screen">
