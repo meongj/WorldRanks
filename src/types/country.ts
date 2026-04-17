@@ -2,7 +2,7 @@ export interface Country {
   name: {
     common: string;
     official: string;
-    nativeName?: Record<string, {official: string; common: string}>;
+    nativeName?: Record<string, { official: string; common: string }>;
   };
   cca2: string;
   cca3: string;
@@ -18,15 +18,21 @@ export interface Country {
   independent?: boolean;
   unMember: boolean;
   languages?: Record<string, string>;
-  currencies?: Record<string, {name: string; symbol: string}>;
+  currencies?: Record<string, { name: string; symbol: string }>;
   continents: string[];
   region: string;
   subregion: string;
 }
 
-export type SortField = "population" | "name" | "area";
+export type SortField = 'population' | 'name' | 'area';
 
-export type Region = "Americas" | "Antarctic" | "Africa" | "Asia" | "Europe" | "Oceania";
+export type Region =
+  | 'Americas'
+  | 'Antarctic'
+  | 'Africa'
+  | 'Asia'
+  | 'Europe'
+  | 'Oceania';
 
 export interface CountryFilters {
   search: string;

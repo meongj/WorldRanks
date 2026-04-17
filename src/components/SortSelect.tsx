@@ -1,17 +1,27 @@
-import {SortField} from "@/types/country";
-import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "./ui/select";
-import {filterActions, FilterDispatch} from "@/hooks/useCountryFilters";
+import { SortField } from '@/types/country';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './ui/select';
+import { filterActions, FilterDispatch } from '@/hooks/useCountryFilters';
 
 interface SortSelectProps {
   value: SortField;
   dispatch: FilterDispatch;
 }
 
-export function SortSelect({value, dispatch}: SortSelectProps) {
+export function SortSelect({ value, dispatch }: SortSelectProps) {
   return (
     <div>
       <p className="text-xs text-muted-foreground mb-2">Sort by</p>
-      <Select value={value} onValueChange={(v) => dispatch(filterActions.setSortBy(v as SortField))}>
+      <Select
+        value={value}
+        onValueChange={(v) => dispatch(filterActions.setSortBy(v as SortField))}
+      >
         <SelectTrigger className="w-full border-border bg-background text-foreground  [&>span]:text-foreground">
           <SelectValue placeholder="Population" className="text-foreground" />
         </SelectTrigger>

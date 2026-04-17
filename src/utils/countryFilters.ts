@@ -1,16 +1,19 @@
 // 기준 : 순수 함수
 // 영어로 검색 (default)
 
-import {Country, CountryFilters, Region} from "@/types/country";
-import {sortBy as sortByFn, orderBy} from "es-toolkit";
-import Fuse from "fuse.js";
+import { Country, CountryFilters, Region } from '@/types/country';
+import { sortBy as sortByFn, orderBy } from 'es-toolkit';
+import Fuse from 'fuse.js';
 
-export function filterBySearch(countries: Country[], search: string): Country[] {
+export function filterBySearch(
+  countries: Country[],
+  search: string,
+): Country[] {
   if (!search) return countries;
 
   // 관대한 매칭
   const fuse = new Fuse(countries, {
-    keys: ["name.common", "region", "subregion"],
+    keys: ['name.common', 'region', 'subregion'],
     threshold: 0.4, // 0=완전일치, 1=전부매칭. 0.4면 적당히 관대
     ignoreLocation: true, // 문자열 위치 무관하게 검색
   });
@@ -26,7 +29,7 @@ export function filterByRegions(countries: Country[], regions: Region[]) {
 // UN국가인지, 독립국가인지 필터링
 export function filterByStatus(
   countries: Country[],
-  {unMember, independent}: Pick<CountryFilters, "unMember" | "independent">,
+  { unMember, independent }: Pick<CountryFilters, 'unMember' | 'independent'>,
 ): Country[] {
   let result = countries;
   if (unMember) result = result.filter((c) => c.unMember);
@@ -40,19 +43,25 @@ export function filterByStatus(
  * Population: 내림차순 (큰 수먼저)
  * Area : 내림차순 (큰 면적 먼저)
  */
-export function sortCountries(countries: Country[], field: CountryFilters["sortBy"]) {
+export function sortCountries(
+  countries: Country[],
+  field: CountryFilters['sortBy'],
+) {
   switch (field) {
-    case "name":
+    case 'name':
       return sortByFn(countries, [(c) => c.name.common]);
-    case "population":
-      return orderBy(countries, [(c) => c.population], ["desc"]);
-    case "area":
-      return orderBy(countries, [(c) => c.area], ["desc"]);
+    case 'population':
+      return orderBy(countries, [(c) => c.population], ['desc']);
+    case 'area':
+      return orderBy(countries, [(c) => c.area], ['desc']);
   }
 }
 
 // 모든 필터를 조합한 최종 필터링 함수
-export function applyFilters(countries: Country[], filters: CountryFilters): Country[] {
+export function applyFilters(
+  countries: Country[],
+  filters: CountryFilters,
+): Country[] {
   let result = countries;
   result = filterBySearch(result, filters.search);
   result = filterByRegions(result, filters.regions);

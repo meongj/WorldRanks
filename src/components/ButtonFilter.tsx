@@ -1,15 +1,22 @@
-import {Region} from "@/types/country";
-import {Button} from "./ui/button";
-import {filterActions, FilterDispatch} from "@/hooks/useCountryFilters";
+import { Region } from '@/types/country';
+import { Button } from './ui/button';
+import { filterActions, FilterDispatch } from '@/hooks/useCountryFilters';
 
-const REGIONS: Region[] = ["Americas", "Antarctic", "Africa", "Asia", "Europe", "Oceania"];
+const REGIONS: Region[] = [
+  'Americas',
+  'Antarctic',
+  'Africa',
+  'Asia',
+  'Europe',
+  'Oceania',
+];
 
 interface ButtonFilterProps {
   selected: Region[];
   dispatch: FilterDispatch;
 }
 
-export function ButtonFilter({selected, dispatch}: ButtonFilterProps) {
+export function ButtonFilter({ selected, dispatch }: ButtonFilterProps) {
   return (
     <div>
       <p className="text-xs text-muted-foreground mb-2">Region</p>
@@ -20,7 +27,8 @@ export function ButtonFilter({selected, dispatch}: ButtonFilterProps) {
             variant="chip"
             size="lg"
             data-active={selected.includes(region)}
-            onClick={() => dispatch(filterActions.toggleRegion(region))}>
+            onClick={() => dispatch(filterActions.toggleRegion(region))}
+          >
             {region}
           </Button>
         ))}
