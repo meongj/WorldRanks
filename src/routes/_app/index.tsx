@@ -1,20 +1,20 @@
-import {SearchInput} from "@/components/SearchInput";
+import { SearchInput } from '@/components/SearchInput';
 
-import {createFileRoute} from "@tanstack/react-router";
-import {ErrorBoundary, Suspense} from "@suspensive/react";
-import {useCountryFilters} from "@/hooks/useCountryFilters";
-import {Skeleton} from "@/components/ui/skeleton";
-import {CountryCount} from "@/components/CountryCount";
-import {CountryTableSection} from "@/components/CountryTableSection";
-import {CountryTableSkeleton} from "@/components/CountryTableSkeleton";
-import {FiltersSideBar} from "@/components/FiltersSideBar";
+import { createFileRoute } from '@tanstack/react-router';
+import { ErrorBoundary, Suspense } from '@suspensive/react';
+import { useCountryFilters } from '@/hooks/useCountryFilters';
+import { Skeleton } from '@/components/ui/skeleton';
+import { CountryCount } from '@/components/CountryCount';
+import { CountryTableSection } from '@/components/CountryTableSection';
+import { CountryTableSkeleton } from '@/components/CountryTableSkeleton';
+import { FiltersSideBar } from '@/components/FiltersSideBar';
 
-export const Route = createFileRoute("/_app/")({
+export const Route = createFileRoute('/_app/')({
   component: HomePage,
 });
 
 function HomePage() {
-  const {filters, setSearch, setSortBy, toggleRegion, toggleUnMember, toggleIndependent} = useCountryFilters(); // 구조분해할당
+  const { filters, dispatch } = useCountryFilters(); // 구조분해할당
 
   return (
     <>
@@ -26,26 +26,21 @@ function HomePage() {
           </Suspense>
         </ErrorBoundary>
         <div className="w-full md:w-[300px]">
-          <SearchInput onSearch={setSearch} />
+          <SearchInput dispatch={dispatch} />
         </div>
       </div>
       {/* CardBody - 다음 스텝에서 채움 */}
       <div className="flex flex-col xl:flex-row gap-6">
-        <FiltersSideBar
-          filters={filters}
-          setSortBy={setSortBy}
-          toggleRegion={toggleRegion}
-          toggleUnMember={toggleUnMember}
-          toggleIndependent={toggleIndependent}
-        />
+        <FiltersSideBar filters={filters} dispatch={dispatch} />
         <div className="flex-1">
           <ErrorBoundary
-            fallback={({error, reset}) => (
+            fallback={({ error, reset }) => (
               <div>
                 <p>에러가 발생했습니다 :{error.message}</p>
                 <button onClick={reset}>다시 시도해주세요</button>
               </div>
-            )}>
+            )}
+          >
             <Suspense fallback={<CountryTableSkeleton />}>
               <CountryTableSection filters={filters} />
             </Suspense>

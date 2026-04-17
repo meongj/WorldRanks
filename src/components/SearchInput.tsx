@@ -1,16 +1,26 @@
-import {Search} from "lucide-react";
-import {InputGroup, InputGroupAddon, InputGroupInput} from "./ui/input-group";
-import {useCallback, useState} from "react";
-import {debounce} from "es-toolkit";
+import { memo, useMemo, useState } from 'react';
+import { debounce } from 'es-toolkit';
+import { filterActions, FilterDispatch } from '@/hooks/useCountryFilters';
+import { InputGroup, InputGroupAddon, InputGroupInput } from './ui/input-group';
+import { Search } from 'lucide-react';
 
 interface SearchInputProps {
-  onSearch: (value: string) => void;
+  dispatch: FilterDispatch;
 }
 
-export function SearchInput({onSearch}: SearchInputProps) {
-  const [value, setValue] = useState("");
+export const SearchInput = memo(function SearchInput({
+  dispatch,
+}: SearchInputProps) {
+  const [value, setValue] = useState('');
 
-  const debouncedSearch = useCallback((query: string) => debounce(onSearch, 300)(query), [onSearch]);
+  const debouncedSearch = useMemo(
+    () =>
+      debounce(
+        (query: string) => dispatch(filterActions.setSearch(query)),
+        300,
+      ),
+    [dispatch],
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -22,7 +32,11 @@ export function SearchInput({onSearch}: SearchInputProps) {
       <InputGroupAddon>
         <Search />
       </InputGroupAddon>
-      <InputGroupInput placeholder="Search by Name, Region, Subregion" onChange={handleChange} value={value} />
+      <InputGroupInput
+        placeholder="Search by Name, Region, Subregion"
+        onChange={handleChange}
+        value={value}
+      />
     </InputGroup>
   );
-}
+});
